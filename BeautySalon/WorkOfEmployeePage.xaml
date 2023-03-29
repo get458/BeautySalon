@@ -1,0 +1,79 @@
+﻿<Page x:Class="BeautySalon.WorkOfEmployeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BeautySalon"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Добавить сотрудника" Style="{StaticResource DefayltPage}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Margin="60,0,60,0" VerticalAlignment="Center">
+            <StackPanel >
+                <TextBlock Text="Роль" Margin="5"></TextBlock>
+                <ComboBox Name="CmbRole" SelectedItem="{Binding Role}" Style="{StaticResource ComboBoxStyle}" Width="Auto" SelectionChanged="CmbRole_SelectionChanged" DisplayMemberPath="NameRole" Margin="5"></ComboBox>
+                <StackPanel x:Name="PersonData">
+                    <TextBlock Text="Фамилия" Margin="5"></TextBlock>
+                    <TextBox Text="{Binding LastName}" Margin="5"></TextBox>
+
+                    <TextBlock Text="Имя" Margin="5"></TextBlock>
+                    <TextBox Text="{Binding Name}" Margin="5"></TextBox>
+
+                    <TextBlock Text="Отчество" Margin="5"></TextBlock>
+                    <TextBox Text="{Binding MiddleName}" Margin="5"></TextBox>
+                </StackPanel>
+                <TextBlock Text="Дата рождения" Margin="5"></TextBlock>
+                <DatePicker SelectedDate="{Binding BirthDate}" Margin="5"></DatePicker>
+
+                <TextBlock Text="Логин" Margin="5"></TextBlock>
+                <TextBox Text="{Binding Login}" Margin="5"></TextBox>
+
+                <TextBlock Text="Пароль" Margin="5"></TextBlock>
+                <TextBox Text="{Binding Password}" Margin="5"></TextBox>
+            </StackPanel>
+        </ScrollViewer>
+       
+        <Grid Grid.Column="1" Name="DataOfMaster" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Услуги мастера" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <DataGrid x:Name="ProcedureOfMasterList" Grid.Row="1" Margin="5" RowHeight="80">
+            <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название" Binding="{Binding ProceduresName}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Стоимость" Binding="{Binding Cost, StringFormat={}{0:F2} ₽}" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTemplateColumn Width="SizeToCells">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="BtnDeleteProcedure" Content="✗" Height="30" Width="30" Click="BtnDeleteProcedure_Click"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+            <StackPanel Grid.Row="2" Margin="5,0,5,0" VerticalAlignment="Center" Orientation="Horizontal">
+                <TextBlock Text="Процедура: " Margin="5"></TextBlock>
+                <ComboBox Name="CmbProcedure" Style="{StaticResource ComboBoxStyle}" Margin="5" DisplayMemberPath="ProceduresName" SelectedIndex="0" Width="180"></ComboBox>
+                <Button x:Name="BtnAddInTable" Grid.ColumnSpan="2" Grid.Row="1" Width="120"  Margin="5" Click="BtnAddInTable_Click">Добавить</Button>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Margin="5,0,5,0" VerticalAlignment="Center" Orientation="Horizontal">
+                <TextBlock Text="Специальность мастера: " Margin="5"></TextBlock>
+                <ComboBox Name="CmbPosition" Style="{StaticResource ComboBoxStyle}" Margin="5" DisplayMemberPath="PositionName" Width="180"></ComboBox>
+            </StackPanel>
+        </Grid>
+        <Button x:Name="BtnAddOrEditEmployee" Grid.ColumnSpan="2" Grid.Row="1"  Width="200" Click="BtnAddOrEditEmployee_Click">Добавить</Button>
+    </Grid>
+       
+</Page>

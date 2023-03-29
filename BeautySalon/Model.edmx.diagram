@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cbbe8381ca5c49d0897117b7401f831d" Name="Diagram1">
+        <EntityTypeShape EntityType="BeautySalonDBModel.Client" Width="1.5" PointX="3" PointY="3.75" />
+        <EntityTypeShape EntityType="BeautySalonDBModel.Discount" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="BeautySalonDBModel.Employee" Width="1.5" PointX="6" PointY="3.5" />
+        <EntityTypeShape EntityType="BeautySalonDBModel.Master" Width="1.5" PointX="8.25" PointY="3.875" />
+        <EntityTypeShape EntityType="BeautySalonDBModel.Person" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="BeautySalonDBModel.Position" Width="1.5" PointX="6" PointY="1" />
+        <EntityTypeShape EntityType="BeautySalonDBModel.Procedure" Width="1.5" PointX="8.25" PointY="0.75" />
+        <EntityTypeShape EntityType="BeautySalonDBModel.ProcedureInRecording" Width="1.5" PointX="7.5" PointY="7.75" />
+        <EntityTypeShape EntityType="BeautySalonDBModel.ProcedureOfMaster" Width="1.5" PointX="10.5" PointY="3.875" />
+        <EntityTypeShape EntityType="BeautySalonDBModel.Recording" Width="1.5" PointX="5.25" PointY="8" />
+        <EntityTypeShape EntityType="BeautySalonDBModel.Role" Width="1.5" PointX="3.75" PointY="1.25" />
+        <AssociationConnector Association="BeautySalonDBModel.FK_Client_Discount" />
+        <AssociationConnector Association="BeautySalonDBModel.FK_Client_Person" />
+        <AssociationConnector Association="BeautySalonDBModel.FK_Recording_Client" />
+        <AssociationConnector Association="BeautySalonDBModel.FK_Employee_Person" />
+        <AssociationConnector Association="BeautySalonDBModel.FK_Employee_Role" />
+        <AssociationConnector Association="BeautySalonDBModel.FK_Master_Employee" />
+        <AssociationConnector Association="BeautySalonDBModel.FK_Master_Position" />
+        <AssociationConnector Association="BeautySalonDBModel.FK_ProcedureOfMaster_Master" />
+        <AssociationConnector Association="BeautySalonDBModel.FK_ProcedureOfMaster_Procedure" />
+        <AssociationConnector Association="BeautySalonDBModel.FK_ProcedureInRecording_ProcedureOfMaster" />
+        <AssociationConnector Association="BeautySalonDBModel.FK_ProcedureInRecording_Recording" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,737 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище BeautySalonDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPerson" Type="int" Nullable="false" />
+          <Property Name="IDDiscount" Type="int" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="DiscountID" />
+          </Key>
+          <Property Name="DiscountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TitleDiscount" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Procent" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsWorking" Type="bit" Nullable="false" />
+          <Property Name="IDRole" Type="int" Nullable="false" />
+          <Property Name="BirthDate" Type="datetime" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDPerson" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Master">
+          <Key>
+            <PropertyRef Name="MasterID" />
+          </Key>
+          <Property Name="MasterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDEmployee" Type="int" Nullable="false" />
+          <Property Name="IDPosition" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PositionName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Procedure">
+          <Key>
+            <PropertyRef Name="ProcedureID" />
+          </Key>
+          <Property Name="ProcedureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProceduresName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cost" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProcedureInRecording">
+          <Key>
+            <PropertyRef Name="ProcedureInRecordingID" />
+          </Key>
+          <Property Name="ProcedureInRecordingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDProcedureOfMaster" Type="int" Nullable="false" />
+          <Property Name="IDRecording" Type="int" Nullable="false" />
+          <Property Name="Time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="IsCanceled" Type="bit" Nullable="false" />
+          <Property Name="IsVisited" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProcedureOfMaster">
+          <Key>
+            <PropertyRef Name="ProcedureOfMasterID" />
+          </Key>
+          <Property Name="ProcedureOfMasterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDMaster" Type="int" Nullable="false" />
+          <Property Name="IDProcedure" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recording">
+          <Key>
+            <PropertyRef Name="RecordingID" />
+          </Key>
+          <Property Name="RecordingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDClient" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameRole" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Client_Discount">
+          <End Role="Discount" Type="Self.Discount" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discount">
+              <PropertyRef Name="DiscountID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="IDDiscount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="IDPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Person">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IDPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IDRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Master_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Master" Type="Self.Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Master">
+              <PropertyRef Name="IDEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Master_Position">
+          <End Role="Position" Type="Self.Position" Multiplicity="1" />
+          <End Role="Master" Type="Self.Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Master">
+              <PropertyRef Name="IDPosition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcedureInRecording_ProcedureOfMaster">
+          <End Role="ProcedureOfMaster" Type="Self.ProcedureOfMaster" Multiplicity="1" />
+          <End Role="ProcedureInRecording" Type="Self.ProcedureInRecording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcedureOfMaster">
+              <PropertyRef Name="ProcedureOfMasterID" />
+            </Principal>
+            <Dependent Role="ProcedureInRecording">
+              <PropertyRef Name="IDProcedureOfMaster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcedureInRecording_Recording">
+          <End Role="Recording" Type="Self.Recording" Multiplicity="1" />
+          <End Role="ProcedureInRecording" Type="Self.ProcedureInRecording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recording">
+              <PropertyRef Name="RecordingID" />
+            </Principal>
+            <Dependent Role="ProcedureInRecording">
+              <PropertyRef Name="IDRecording" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcedureOfMaster_Master">
+          <End Role="Master" Type="Self.Master" Multiplicity="1" />
+          <End Role="ProcedureOfMaster" Type="Self.ProcedureOfMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Master">
+              <PropertyRef Name="MasterID" />
+            </Principal>
+            <Dependent Role="ProcedureOfMaster">
+              <PropertyRef Name="IDMaster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcedureOfMaster_Procedure">
+          <End Role="Procedure" Type="Self.Procedure" Multiplicity="1" />
+          <End Role="ProcedureOfMaster" Type="Self.ProcedureOfMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Procedure">
+              <PropertyRef Name="ProcedureID" />
+            </Principal>
+            <Dependent Role="ProcedureOfMaster">
+              <PropertyRef Name="IDProcedure" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recording_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Recording" Type="Self.Recording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Recording">
+              <PropertyRef Name="IDClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище BeautySalonDBModelContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Master" EntityType="Self.Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Procedure" EntityType="Self.Procedure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProcedureInRecording" EntityType="Self.ProcedureInRecording" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProcedureOfMaster" EntityType="Self.ProcedureOfMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recording" EntityType="Self.Recording" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Client_Discount" Association="Self.FK_Client_Discount">
+            <End Role="Discount" EntitySet="Discount" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_Person" Association="Self.FK_Client_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Person" Association="Self.FK_Employee_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Master_Employee" Association="Self.FK_Master_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Master" EntitySet="Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Master_Position" Association="Self.FK_Master_Position">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Master" EntitySet="Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcedureInRecording_ProcedureOfMaster" Association="Self.FK_ProcedureInRecording_ProcedureOfMaster">
+            <End Role="ProcedureOfMaster" EntitySet="ProcedureOfMaster" />
+            <End Role="ProcedureInRecording" EntitySet="ProcedureInRecording" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcedureInRecording_Recording" Association="Self.FK_ProcedureInRecording_Recording">
+            <End Role="Recording" EntitySet="Recording" />
+            <End Role="ProcedureInRecording" EntitySet="ProcedureInRecording" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcedureOfMaster_Master" Association="Self.FK_ProcedureOfMaster_Master">
+            <End Role="Master" EntitySet="Master" />
+            <End Role="ProcedureOfMaster" EntitySet="ProcedureOfMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcedureOfMaster_Procedure" Association="Self.FK_ProcedureOfMaster_Procedure">
+            <End Role="Procedure" EntitySet="Procedure" />
+            <End Role="ProcedureOfMaster" EntitySet="ProcedureOfMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recording_Client" Association="Self.FK_Recording_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Recording" EntitySet="Recording" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BeautySalonDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BeautySalonDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Client" EntityType="BeautySalonDBModel.Client" />
+          <EntitySet Name="Discount" EntityType="BeautySalonDBModel.Discount" />
+          <EntitySet Name="Employee" EntityType="BeautySalonDBModel.Employee" />
+          <EntitySet Name="Master" EntityType="BeautySalonDBModel.Master" />
+          <EntitySet Name="Person" EntityType="BeautySalonDBModel.Person" />
+          <EntitySet Name="Position" EntityType="BeautySalonDBModel.Position" />
+          <EntitySet Name="Procedure" EntityType="BeautySalonDBModel.Procedure" />
+          <EntitySet Name="ProcedureInRecording" EntityType="BeautySalonDBModel.ProcedureInRecording" />
+          <EntitySet Name="ProcedureOfMaster" EntityType="BeautySalonDBModel.ProcedureOfMaster" />
+          <EntitySet Name="Recording" EntityType="BeautySalonDBModel.Recording" />
+          <EntitySet Name="Role" EntityType="BeautySalonDBModel.Role" />
+          <AssociationSet Name="FK_Client_Discount" Association="BeautySalonDBModel.FK_Client_Discount">
+            <End Role="Discount" EntitySet="Discount" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_Person" Association="BeautySalonDBModel.FK_Client_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recording_Client" Association="BeautySalonDBModel.FK_Recording_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Recording" EntitySet="Recording" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Person" Association="BeautySalonDBModel.FK_Employee_Person">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role" Association="BeautySalonDBModel.FK_Employee_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Master_Employee" Association="BeautySalonDBModel.FK_Master_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Master" EntitySet="Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Master_Position" Association="BeautySalonDBModel.FK_Master_Position">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Master" EntitySet="Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcedureOfMaster_Master" Association="BeautySalonDBModel.FK_ProcedureOfMaster_Master">
+            <End Role="Master" EntitySet="Master" />
+            <End Role="ProcedureOfMaster" EntitySet="ProcedureOfMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcedureOfMaster_Procedure" Association="BeautySalonDBModel.FK_ProcedureOfMaster_Procedure">
+            <End Role="Procedure" EntitySet="Procedure" />
+            <End Role="ProcedureOfMaster" EntitySet="ProcedureOfMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcedureInRecording_ProcedureOfMaster" Association="BeautySalonDBModel.FK_ProcedureInRecording_ProcedureOfMaster">
+            <End Role="ProcedureOfMaster" EntitySet="ProcedureOfMaster" />
+            <End Role="ProcedureInRecording" EntitySet="ProcedureInRecording" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcedureInRecording_Recording" Association="BeautySalonDBModel.FK_ProcedureInRecording_Recording">
+            <End Role="Recording" EntitySet="Recording" />
+            <End Role="ProcedureInRecording" EntitySet="ProcedureInRecording" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPerson" Type="Int32" Nullable="false" />
+          <Property Name="IDDiscount" Type="Int32" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Discount" Relationship="BeautySalonDBModel.FK_Client_Discount" FromRole="Client" ToRole="Discount" />
+          <NavigationProperty Name="Person" Relationship="BeautySalonDBModel.FK_Client_Person" FromRole="Client" ToRole="Person" />
+          <NavigationProperty Name="Recording" Relationship="BeautySalonDBModel.FK_Recording_Client" FromRole="Client" ToRole="Recording" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="DiscountID" />
+          </Key>
+          <Property Name="DiscountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TitleDiscount" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Procent" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="BeautySalonDBModel.FK_Client_Discount" FromRole="Discount" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsWorking" Type="Boolean" Nullable="false" />
+          <Property Name="IDRole" Type="Int32" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDPerson" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="BeautySalonDBModel.FK_Employee_Person" FromRole="Employee" ToRole="Person" />
+          <NavigationProperty Name="Role" Relationship="BeautySalonDBModel.FK_Employee_Role" FromRole="Employee" ToRole="Role" />
+          <NavigationProperty Name="Master" Relationship="BeautySalonDBModel.FK_Master_Employee" FromRole="Employee" ToRole="Master" />
+        </EntityType>
+        <EntityType Name="Master">
+          <Key>
+            <PropertyRef Name="MasterID" />
+          </Key>
+          <Property Name="MasterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDEmployee" Type="Int32" Nullable="false" />
+          <Property Name="IDPosition" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="BeautySalonDBModel.FK_Master_Employee" FromRole="Master" ToRole="Employee" />
+          <NavigationProperty Name="Position" Relationship="BeautySalonDBModel.FK_Master_Position" FromRole="Master" ToRole="Position" />
+          <NavigationProperty Name="ProcedureOfMaster" Relationship="BeautySalonDBModel.FK_ProcedureOfMaster_Master" FromRole="Master" ToRole="ProcedureOfMaster" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client" Relationship="BeautySalonDBModel.FK_Client_Person" FromRole="Person" ToRole="Client" />
+          <NavigationProperty Name="Employee" Relationship="BeautySalonDBModel.FK_Employee_Person" FromRole="Person" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PositionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Master" Relationship="BeautySalonDBModel.FK_Master_Position" FromRole="Position" ToRole="Master" />
+        </EntityType>
+        <EntityType Name="Procedure">
+          <Key>
+            <PropertyRef Name="ProcedureID" />
+          </Key>
+          <Property Name="ProcedureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProceduresName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="ProcedureOfMaster" Relationship="BeautySalonDBModel.FK_ProcedureOfMaster_Procedure" FromRole="Procedure" ToRole="ProcedureOfMaster" />
+        </EntityType>
+        <EntityType Name="ProcedureInRecording">
+          <Key>
+            <PropertyRef Name="ProcedureInRecordingID" />
+          </Key>
+          <Property Name="ProcedureInRecordingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDProcedureOfMaster" Type="Int32" Nullable="false" />
+          <Property Name="IDRecording" Type="Int32" Nullable="false" />
+          <Property Name="Time" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="IsCanceled" Type="Boolean" Nullable="false" />
+          <Property Name="IsVisited" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ProcedureOfMaster" Relationship="BeautySalonDBModel.FK_ProcedureInRecording_ProcedureOfMaster" FromRole="ProcedureInRecording" ToRole="ProcedureOfMaster" />
+          <NavigationProperty Name="Recording" Relationship="BeautySalonDBModel.FK_ProcedureInRecording_Recording" FromRole="ProcedureInRecording" ToRole="Recording" />
+        </EntityType>
+        <EntityType Name="ProcedureOfMaster">
+          <Key>
+            <PropertyRef Name="ProcedureOfMasterID" />
+          </Key>
+          <Property Name="ProcedureOfMasterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDMaster" Type="Int32" Nullable="false" />
+          <Property Name="IDProcedure" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Master" Relationship="BeautySalonDBModel.FK_ProcedureOfMaster_Master" FromRole="ProcedureOfMaster" ToRole="Master" />
+          <NavigationProperty Name="Procedure" Relationship="BeautySalonDBModel.FK_ProcedureOfMaster_Procedure" FromRole="ProcedureOfMaster" ToRole="Procedure" />
+          <NavigationProperty Name="ProcedureInRecording" Relationship="BeautySalonDBModel.FK_ProcedureInRecording_ProcedureOfMaster" FromRole="ProcedureOfMaster" ToRole="ProcedureInRecording" />
+        </EntityType>
+        <EntityType Name="Recording">
+          <Key>
+            <PropertyRef Name="RecordingID" />
+          </Key>
+          <Property Name="RecordingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDClient" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Client" Relationship="BeautySalonDBModel.FK_Recording_Client" FromRole="Recording" ToRole="Client" />
+          <NavigationProperty Name="ProcedureInRecording" Relationship="BeautySalonDBModel.FK_ProcedureInRecording_Recording" FromRole="Recording" ToRole="ProcedureInRecording" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRole" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="BeautySalonDBModel.FK_Employee_Role" FromRole="Role" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Client_Discount">
+          <End Type="BeautySalonDBModel.Discount" Role="Discount" Multiplicity="1" />
+          <End Type="BeautySalonDBModel.Client" Role="Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discount">
+              <PropertyRef Name="DiscountID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="IDDiscount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_Person">
+          <End Type="BeautySalonDBModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="BeautySalonDBModel.Client" Role="Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="IDPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recording_Client">
+          <End Type="BeautySalonDBModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="BeautySalonDBModel.Recording" Role="Recording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Recording">
+              <PropertyRef Name="IDClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Person">
+          <End Type="BeautySalonDBModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="BeautySalonDBModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IDPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role">
+          <End Type="BeautySalonDBModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="BeautySalonDBModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IDRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Master_Employee">
+          <End Type="BeautySalonDBModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="BeautySalonDBModel.Master" Role="Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Master">
+              <PropertyRef Name="IDEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Master_Position">
+          <End Type="BeautySalonDBModel.Position" Role="Position" Multiplicity="1" />
+          <End Type="BeautySalonDBModel.Master" Role="Master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Master">
+              <PropertyRef Name="IDPosition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcedureOfMaster_Master">
+          <End Type="BeautySalonDBModel.Master" Role="Master" Multiplicity="1" />
+          <End Type="BeautySalonDBModel.ProcedureOfMaster" Role="ProcedureOfMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Master">
+              <PropertyRef Name="MasterID" />
+            </Principal>
+            <Dependent Role="ProcedureOfMaster">
+              <PropertyRef Name="IDMaster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcedureOfMaster_Procedure">
+          <End Type="BeautySalonDBModel.Procedure" Role="Procedure" Multiplicity="1" />
+          <End Type="BeautySalonDBModel.ProcedureOfMaster" Role="ProcedureOfMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Procedure">
+              <PropertyRef Name="ProcedureID" />
+            </Principal>
+            <Dependent Role="ProcedureOfMaster">
+              <PropertyRef Name="IDProcedure" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcedureInRecording_ProcedureOfMaster">
+          <End Type="BeautySalonDBModel.ProcedureOfMaster" Role="ProcedureOfMaster" Multiplicity="1" />
+          <End Type="BeautySalonDBModel.ProcedureInRecording" Role="ProcedureInRecording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcedureOfMaster">
+              <PropertyRef Name="ProcedureOfMasterID" />
+            </Principal>
+            <Dependent Role="ProcedureInRecording">
+              <PropertyRef Name="IDProcedureOfMaster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcedureInRecording_Recording">
+          <End Type="BeautySalonDBModel.Recording" Role="Recording" Multiplicity="1" />
+          <End Type="BeautySalonDBModel.ProcedureInRecording" Role="ProcedureInRecording" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recording">
+              <PropertyRef Name="RecordingID" />
+            </Principal>
+            <Dependent Role="ProcedureInRecording">
+              <PropertyRef Name="IDRecording" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище BeautySalonDBModelContainer" CdmEntityContainer="BeautySalonDBEntities">
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="BeautySalonDBModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="IDDiscount" ColumnName="IDDiscount" />
+                <ScalarProperty Name="IDPerson" ColumnName="IDPerson" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Discount">
+            <EntityTypeMapping TypeName="BeautySalonDBModel.Discount">
+              <MappingFragment StoreEntitySet="Discount">
+                <ScalarProperty Name="Procent" ColumnName="Procent" />
+                <ScalarProperty Name="TitleDiscount" ColumnName="TitleDiscount" />
+                <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="BeautySalonDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="IDPerson" ColumnName="IDPerson" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="IDRole" ColumnName="IDRole" />
+                <ScalarProperty Name="IsWorking" ColumnName="IsWorking" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Master">
+            <EntityTypeMapping TypeName="BeautySalonDBModel.Master">
+              <MappingFragment StoreEntitySet="Master">
+                <ScalarProperty Name="IDPosition" ColumnName="IDPosition" />
+                <ScalarProperty Name="IDEmployee" ColumnName="IDEmployee" />
+                <ScalarProperty Name="MasterID" ColumnName="MasterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Person">
+            <EntityTypeMapping TypeName="BeautySalonDBModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Position">
+            <EntityTypeMapping TypeName="BeautySalonDBModel.Position">
+              <MappingFragment StoreEntitySet="Position">
+                <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Procedure">
+            <EntityTypeMapping TypeName="BeautySalonDBModel.Procedure">
+              <MappingFragment StoreEntitySet="Procedure">
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="ProceduresName" ColumnName="ProceduresName" />
+                <ScalarProperty Name="ProcedureID" ColumnName="ProcedureID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcedureInRecording">
+            <EntityTypeMapping TypeName="BeautySalonDBModel.ProcedureInRecording">
+              <MappingFragment StoreEntitySet="ProcedureInRecording">
+                <ScalarProperty Name="IsVisited" ColumnName="IsVisited" />
+                <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="IDRecording" ColumnName="IDRecording" />
+                <ScalarProperty Name="IDProcedureOfMaster" ColumnName="IDProcedureOfMaster" />
+                <ScalarProperty Name="ProcedureInRecordingID" ColumnName="ProcedureInRecordingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcedureOfMaster">
+            <EntityTypeMapping TypeName="BeautySalonDBModel.ProcedureOfMaster">
+              <MappingFragment StoreEntitySet="ProcedureOfMaster">
+                <ScalarProperty Name="IDProcedure" ColumnName="IDProcedure" />
+                <ScalarProperty Name="IDMaster" ColumnName="IDMaster" />
+                <ScalarProperty Name="ProcedureOfMasterID" ColumnName="ProcedureOfMasterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recording">
+            <EntityTypeMapping TypeName="BeautySalonDBModel.Recording">
+              <MappingFragment StoreEntitySet="Recording">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IDClient" ColumnName="IDClient" />
+                <ScalarProperty Name="RecordingID" ColumnName="RecordingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="BeautySalonDBModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="NameRole" ColumnName="NameRole" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
